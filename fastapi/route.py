@@ -29,7 +29,7 @@ class LaptopRating(BaseModel):
 
 
 @app.get("/laptop_ratings", response_model=list[LaptopRating])
-async def get_laptop_ratings()-> list[LaptopRating]:
+async def get_laptop_ratings() -> list[LaptopRating]:
     """This endpoint retrieves ratings for laptops based on
     optional query parameters.
     """
