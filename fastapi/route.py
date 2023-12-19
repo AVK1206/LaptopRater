@@ -33,11 +33,11 @@ async def get_laptop_ratings() -> list[LaptopRating]:
     """This endpoint retrieves ratings for laptops based on
     optional query parameters.
     """
-    query_title = {"title": {"$regex": "Lenovo", "$options": "i"}}
-    query_rating = {"rating": 5}
+    # query_title = {"title": {"$regex": "Lenovo", "$options": "i"}}
+    # query_rating = {"rating": 5}
     query_combined = {"title": {"$regex": "asus", "$options": "i"},
                       "rating": 4}
 
     laptop_ratings = [LaptopRating.from_mongo(document) for document in
-                      collection.find()]
+                      collection.find(query_combined)]
     return laptop_ratings
