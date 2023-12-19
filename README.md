@@ -74,5 +74,5 @@ The project is divided into three main parts:
     cd fastapi
 
     ```
-    uvicorn main:app --reload
+    uvicorn route:app --reload
     ```
