@@ -1,5 +1,0 @@
-Django
-djangorestframework
-djongo
-selenium
-beautifulsoup
