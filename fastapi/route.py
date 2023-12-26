@@ -41,4 +41,5 @@ async def get_laptop_ratings(title: str = None, rating: int = None) -> list[
 
     laptop_ratings = [LaptopRating.from_mongo(document) for document in
                       collection.find(query)]
+
     return laptop_ratings
