@@ -7,7 +7,6 @@ from fastapi import FastAPI
 from pymongo import MongoClient
 from pydantic import BaseModel
 
-
 app = FastAPI()
 
 client = MongoClient("mongodb://localhost:27017/")
@@ -29,15 +28,17 @@ class LaptopRating(BaseModel):
 
 
 @app.get("/laptop_ratings", response_model=list[LaptopRating])
-async def get_laptop_ratings()-> list[LaptopRating]:
+async def get_laptop_ratings(title: str = None, rating: int = None) -> list[
+    LaptopRating]:
     """This endpoint retrieves ratings for laptops based on
     optional query parameters.
     """
-    query_title = {"title": {"$regex": "Lenovo", "$options": "i"}}
-    query_rating = {"rating": 5}
-    query_combined = {"title": {"$regex": "asus", "$options": "i"},
-                      "rating": 4}
+    query = {}
+    if title:
+        query["title"] = {"$regex": title, "$options": "i"}
+    if rating:
+        query["rating"] = rating
 
     laptop_ratings = [LaptopRating.from_mongo(document) for document in
-                      collection.find()]
+                      collection.find(query)]
     return laptop_ratings
