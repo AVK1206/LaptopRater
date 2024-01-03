@@ -18,7 +18,7 @@ def insert_info_in_mongodb(products: list[dict]) -> None:
     existing collection if it exists, and inserts the new data.
     """
     client = MongoClient("mongodb://mongodb:27017/")
-    db = client["laptops"]
+    db = client["lappy"]
     collection = db["ratings"]
 
     try:
