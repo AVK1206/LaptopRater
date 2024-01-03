@@ -1,0 +1,21 @@
+version: "0.1"
+
+networks:
+  lappy:
+
+services:
+  app:
+    networks:
+      - lappy
+    build: ./fastapi
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    networks:
+      - lappy
+    image: mongodb:latest
+    restart: always
