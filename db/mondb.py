@@ -17,7 +17,7 @@ def insert_info_in_mongodb(products: list[dict]) -> None:
     The function connects to the MongoDB server, drops the
     existing collection if it exists, and inserts the new data.
     """
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient("mongodb://mongodb:27017/")
     db = client["laptops"]
     collection = db["ratings"]
 
