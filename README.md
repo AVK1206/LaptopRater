@@ -69,10 +69,6 @@ The project is divided into three main parts:
        ```
 
 3. Run server FastAPI
-
-    Change directory where the script: 
-    cd fastapi
-
     ```
     uvicorn route:app --reload
     ```
