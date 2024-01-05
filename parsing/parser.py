@@ -4,7 +4,6 @@ It extracts details such as
 the product title and rating for laptops listed on the site.
 """
 
-import time
 import re
 
 from bs4 import BeautifulSoup
@@ -25,8 +24,23 @@ def clean_title(title: str) -> str:
     return title
 
 
-def collect_products(
-        base_url: str = foxtrot_url) -> list[dict]:
+def setup_selenium():
+    """Set up Selenium with Chrome in headless mode."""
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-software-rasterizer")
+    chrome_options.add_argument("--disable-features=VizDisplayCompositor")
+
+    driver = webdriver.Chrome(options=chrome_options)
+    return driver
+
+
+def collect_products(driver, base_url: str = foxtrot_url) -> list[dict]:
     """Collects products from the provided base URL. It iterates
     through  the pages, scraping product titles and ratings
     and stops when pages are over.
@@ -36,8 +50,6 @@ def collect_products(
     is_first_page = True
     first_page_data = None
 
-    driver = webdriver.Chrome()
-
     try:
         while True:
             url = f"{base_url}page={current_page}"
@@ -45,7 +57,7 @@ def collect_products(
 
             driver.get(url)
 
-            items = WebDriverWait(driver, 10).until(
+            items = WebDriverWait(driver, 20).until(
                 EC.presence_of_all_elements_located(
                     (By.CSS_SELECTOR, 'div.card__body')))
 
@@ -79,9 +91,14 @@ def collect_products(
                 all_products.append(product_data)
 
             current_page += 1
-            time.sleep(1)
 
-    finally:
-        driver.quit()
+    except Exception as e:
+        print(f"[ERROR] An error occurred: {e}")
 
     return all_products
+
+
+if __name__ == "__main__":
+    driver = setup_selenium()
+    products = collect_products(driver)
+    driver.quit()
