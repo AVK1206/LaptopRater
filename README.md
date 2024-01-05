@@ -1,4 +1,4 @@
-# LaptopRater
+![image](https://github.com/AVK1206/LaptopRater/assets/134367028/9c9fe3a9-c12e-409a-8077-98f598752ca6)# LaptopRater
 This project comprises a complete pipeline for scraping laptop product information from an online store, storing the data in MongoDB, and providing an API to access the scraped data.
 The project is divided into three main parts:
 
@@ -48,7 +48,7 @@ The project is divided into three main parts:
     pip install -r requirements.txt
     ```
  
-# Usage
+# Local Usage
 
 1. Connection to MongoDB
     
@@ -72,3 +72,10 @@ The project is divided into three main parts:
     ```
     uvicorn route:app --reload
     ```
+    
+# Automatically Usage
+    
+    ```
+    Docker-compose up -d
+    ```
+    
