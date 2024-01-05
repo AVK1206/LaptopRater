@@ -7,11 +7,11 @@ the "parsing.parser" module for data scraping.
 """
 
 from pymongo import MongoClient
-from parsing.parser import collect_products
+from parsing.parser import collect_products, setup_selenium
 
 
 def insert_info_in_mongodb(products: list[dict]) -> None:
-    """ Inserts a list of product information into
+    """Inserts a list of product information into
     the MongoDB database.
 
     The function connects to the MongoDB server, drops the
@@ -30,4 +30,8 @@ def insert_info_in_mongodb(products: list[dict]) -> None:
         print(f"[ERROR] Error inserting data: {error}")
 
 
-insert_info_in_mongodb(collect_products())
+if __name__ == "__main__":
+    driver = setup_selenium()
+    products = collect_products(driver)
+    driver.quit()
+    insert_info_in_mongodb(products)
