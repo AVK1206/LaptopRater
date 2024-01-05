@@ -9,8 +9,8 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-client = MongoClient("mongodb://localhost:27017/")
-db = client["laptops"]
+client = MongoClient("mongodb://mongodb:27017/")
+db = client["lappy"]
 collection = db["ratings"]
 
 
@@ -28,7 +28,8 @@ class LaptopRating(BaseModel):
 
 
 @app.get("/laptop_ratings", response_model=list[LaptopRating])
-async def get_laptop_ratings(title: str = None, rating: int = None):
+async def get_laptop_ratings(title: str = None, rating: int = None) -> list[
+    LaptopRating]:
     """This endpoint retrieves ratings for laptops based on
     optional query parameters.
     """
