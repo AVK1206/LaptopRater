@@ -2,20 +2,30 @@ version: "3"
 
 networks:
   lappy:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "11.0.2.0/24"
 
 services:
   app:
     networks:
-      - lappy
-    build: ./fastapi
+      lappy:
+        ipv4_address: 11.0.2.2
+    build: .
     restart: always
     ports:
-      - "8002:8002"
+      - "8004:8004"
     depends_on:
       - mongodb
 
   mongodb:
     networks:
-      - lappy
-    image: mongodb:latest
-    restart: always
+      lappy:
+        ipv4_address: 11.0.2.3
+    image: mongodb/mongodb-community-server
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+      
